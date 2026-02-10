@@ -85,16 +85,11 @@ async def process_bfhl(request: BFHLRequest):
             if client is None:
                 return JSONResponse(
                     status_code=500,
-                    content={"is_success": False, "official_email": OFFICIAL_EMAIL, "error": "AI API Key not configured."}
+                    content={"is_success": False, "official_email": OFFICIAL_EMAIL, "error": "AI API Key missing."}
                 )
             
             chat_completion = client.chat.completions.create(
-                messages=[
-                    {
-                        "role": "user",
-                        "content": f"Answer in strictly one word: {val}",
-                    }
-                ],
+                messages=[{"role": "user", "content": f"Answer in strictly one word: {val}"}],
                 model="llama-3.3-70b-versatile",
             )
             result = chat_completion.choices[0].message.content.strip().split()[0].replace(".", "").replace(",", "")
