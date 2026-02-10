@@ -8,12 +8,14 @@ from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-# Configuration
-# Note: Ensure GROQ_API_KEY is set in your Render/hosting Environment Variables
-client = OpenAI(
-    api_key=os.environ.get("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1",
-)
+api_key = os.environ.get("GROQ_API_KEY")
+if not api_key:
+    client = None
+else:
+    client = OpenAI(
+        api_key=api_key,
+        base_url="https://api.groq.com/openai/v1",
+    )
 
 OFFICIAL_EMAIL = "vansh1560.be23@chitkarauniversity.edu.in" 
 
@@ -80,7 +82,12 @@ async def process_bfhl(request: BFHLRequest):
                     h = math.gcd(h, i)
                 result = h
         elif key == "AI":
-            # AI Integration using Groq/OpenAI structure [cite: 100]
+            if client is None:
+                return JSONResponse(
+                    status_code=500,
+                    content={"is_success": False, "official_email": OFFICIAL_EMAIL, "error": "AI API Key not configured."}
+                )
+            
             chat_completion = client.chat.completions.create(
                 messages=[
                     {
@@ -88,7 +95,7 @@ async def process_bfhl(request: BFHLRequest):
                         "content": f"Answer in strictly one word: {val}",
                     }
                 ],
-                model="llama3-8b-8192", # Using a standard Groq model for stability
+                model="llama-3.3-70b-versatile",
             )
             result = chat_completion.choices[0].message.content.strip().split()[0].replace(".", "").replace(",", "")
 
