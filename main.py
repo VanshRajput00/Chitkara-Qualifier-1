@@ -10,7 +10,7 @@ app = FastAPI()
 
 GEMINI_KEY = "AIzaSyAcvhv9F7mdFTkjzeAiL0LZn3B9i7KbzKQ"
 genai.configure(api_key=GEMINI_KEY)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 OFFICIAL_EMAIL = "vansh1560.be23@chitkarauniversity.edu.in" 
 
@@ -96,4 +96,5 @@ async def process_bfhl(request: BFHLRequest):
         return JSONResponse(
             status_code=400,
             content={"is_success": False, "official_email": OFFICIAL_EMAIL, "error": str(e)}
+
         )
