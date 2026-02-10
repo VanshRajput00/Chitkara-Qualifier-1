@@ -1,106 +1,114 @@
-# Chitkara University - Qualifier 1 (Class of 2027)
+Gemini said
+Here is the clean, professional version of your README.md without any comments. It is structured to highlight your compliance with the strict assessment criteria.
 
-## Project Overview
-This repository contains the implementation of two REST APIs developed for the **Chitkara Qualifier 1 (Feb 2026)**. The project is built using **Python** and **FastAPI**, featuring external **AI integration** via Google Gemini.
+Chitkara University - Qualifier 1 (Class of 2027)
+Project Overview
+This repository contains the implementation of two REST APIs developed for the Qualifier 1. The project is built using Python and FastAPI, featuring external AI integration for intelligent, single-word responses.
 
-### Submission Details
-- **Name:** Vansh
-- **Roll No:** 2311981560
-- **Email:** vansh1560.be23@chitkarauniversity.edu.in
-- **Deployment Platform:** Render
+Submission Details
+Name: Vansh
 
----
+Roll No: 2311981560
 
-## API Endpoints
+Email: vansh1560.be23@chitkarauniversity.edu.in
 
-### 1. GET /health
-Checks the current status of the API and returns official identification.
-- **URL:** `https://your-app-name.onrender.com/health`
-- **Response Structure:**
-  ```json
-  {
-    "is_success": true,
-    "official_email": "vansh1560.be23@chitkarauniversity.edu.in"
-  }
----
+Deployment Platform: Render
 
-## API Endpoints
+Evaluation Compliance
 
-### 2. POST /bfhl
-Processes input data for calculation or AI interactions.
+Strict API Structure: All JSON responses follow the precise mandatory format.
 
-- **URL:** `https://your-app-name.onrender.com/bfhl`
-- **Method:** `POST`
-- **Header:** `Content-Type: application/json`
 
-#### Request Body (Select ONE key per request):
+Robust Validation: Implements Pydantic models for data integrity and boundary condition handling.
 
-1. **Fibonacci Sequence:**
-```json
-{ "fibonacci": 8 }
-```
-*Returns the first 8 Fibonacci numbers.*
 
-2. **Prime Numbers:**
-```json
-{ "prime": [10, 2, 13, 17, 4, 8] }
-```
-*Returns all prime numbers from the list.*
+Graceful Error Handling: Provides appropriate HTTP status codes and ensures no server crashes.
 
-3. **LCM Calculation:**
-```json
-{ "lcm": [4, 6, 8] }
-```
-*Returns the Least Common Multiple of the numbers.*
 
-4. **HCF Calculation:**
-```json
-{ "hcf": [12, 18, 24] }
-```
-*Returns the Highest Common Factor of the numbers.*
+Security Guardrails: Validates requests to ensure exactly one functional key is processed.
 
-5. **AI Interaction:**
-```json
-{ "AI": "What is the capital of India?" }
-```
-*Returns a single-word AI-generated answer.*
+API Endpoints
+1. GET /health
+URL: https://chitkara-qualifier-1-9j22.onrender.com/health
 
-## Response Structure
+Response Structure:
+
+JSON
+{
+  "is_success": true,
+  "official_email": "vansh1560.be23@chitkarauniversity.edu.in"
+}
+
+
+2. POST /bfhl
+URL: https://chitkara-qualifier-1-9j22.onrender.com/bfhl
+
+Method: POST
+
+Header: Content-Type: application/json
+
+Functional Keys and Logic
+Key	Input	Output
+fibonacci	Integer	
+Fibonacci series 
+
+prime	Integer array	
+Prime numbers 
+
+lcm	Integer array	
+LCM value 
+
+hcf	Integer array	
+HCF value 
+
+AI	Question string	
+Single-word AI response 
+
+Request Examples
+
+Fibonacci: { "fibonacci": 7 } 
+
+
+Prime: { "prime": [2, 4, 7] } 
+
+
+LCM: { "lcm": [12, 18] } 
+
+
+HCF: { "hcf": [24, 36] } 
+
+AI: { "AI": "Capital of India?" } 
+
+Response Structure
 All successful responses follow this format:
-```json
+
+JSON
 {
     "is_success": true,
     "official_email": "vansh1560.be23@chitkarauniversity.edu.in",
     "data": <result>
 }
-```
 
-## How to Run Locally
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-name>
-   ```
+Local Setup
+Clone the repository:
 
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+Bash
+git clone https://github.com/VanshRajput00/Chitkara-Qualifier-1
+Install dependencies:
 
-3. **Run the server:**
-   ```bash
-   uvicorn main:app --reload
-   ```
+Bash
+pip install -r requirements.txt
+Run the server:
 
-4. **Access the API:**
-   - Health Check: `http://127.0.0.1:8000/health`
-   - POST Request: `http://127.0.0.1:8000/bfhl` (Use Postman or Curl)
+Bash
+uvicorn main:app --reload
+Deployment Configuration
 
-## Deployment
+Platform: Render 
 
-This project is configured for deployment on **Render**.
-1. Push code to GitHub.
-2. Link repository to Render Web Service.
-3. Build Command: `pip install -r requirements.txt`
-4. Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+Build Command: pip install -r requirements.txt 
+
+
+Start Command: uvicorn main:app --host 0.0.0.0 --port $PORT
