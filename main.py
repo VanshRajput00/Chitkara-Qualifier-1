@@ -1,16 +1,19 @@
 import math
 import os
-import google.generativeai as genai
-from fastapi import FastAPI, HTTPException, Request
+from openai import OpenAI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
-from typing import List, Union, Optional
+from typing import List, Optional
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-GEMINI_KEY = "AIzaSyAcvhv9F7mdFTkjzeAiL0LZn3B9i7KbzKQ"
-genai.configure(api_key=GEMINI_KEY)
-model = genai.GenerativeModel('models/gemini-1.5-flash')
+# Configuration
+# Note: Ensure GROQ_API_KEY is set in your Render/hosting Environment Variables
+client = OpenAI(
+    api_key=os.environ.get("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1",
+)
 
 OFFICIAL_EMAIL = "vansh1560.be23@chitkarauniversity.edu.in" 
 
@@ -53,9 +56,11 @@ async def process_bfhl(request: BFHLRequest):
                 status_code=400, 
                 content={"is_success": False, "official_email": OFFICIAL_EMAIL, "data": "Error: Exactly one key is required."}
             )
+        
         key = list(input_data.keys())[0]
         val = input_data[key]
         result = None
+
         if key == "fibonacci":
             result = get_fibonacci(val)
         elif key == "prime":
@@ -75,9 +80,18 @@ async def process_bfhl(request: BFHLRequest):
                     h = math.gcd(h, i)
                 result = h
         elif key == "AI":
-            prompt = f"Answer in strictly one word: {val}"
-            response = model.generate_content(prompt)
-            result = response.text.strip().split()[0].replace(".", "").replace(",", "")
+            # AI Integration using Groq/OpenAI structure [cite: 100]
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"Answer in strictly one word: {val}",
+                    }
+                ],
+                model="llama3-8b-8192", # Using a standard Groq model for stability
+            )
+            result = chat_completion.choices[0].message.content.strip().split()[0].replace(".", "").replace(",", "")
+
         return {
             "is_success": True,
             "official_email": OFFICIAL_EMAIL,
